@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import persons from './persons'
+import personReducer from './person'
 
-const obsApp = combineReducers({
-    persons
+
+const rootReducer = combineReducers({
+    personState: personReducer
+    //TODO all reducers
 })
 
-export default obsApp
+export default rootReducer

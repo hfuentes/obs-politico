@@ -1,21 +1,26 @@
-import { connect } from 'react-redux'
 import PersonList from './PersonList'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
+import { withFirebase } from '../components/Firebase';
 
-const mapStateToProps = (state) => {
-	return state.persons
-}
+const mapStateToProps = state => ({
+	persons: Object.keys(state.personState.persons || {}).map(key => ({
+		...state.personState.persons[key],
+		uid: key
+	}))
+})
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onPersonClick: (id) => {
-			dispatch((id) => console.log('Click person id = ' + id))
-		}
-	}
-}
+const mapDispatchToProps = dispatch => ({
+	onSetPersons: persons => dispatch({
+		type: 'PERSONS_SET',
+		persons
+	})
+})
 
-const VisiblePersonList = connect(
-	mapStateToProps,
-	mapDispatchToProps
+export default compose(
+	withFirebase, 
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)
 )(PersonList)
-
-export default VisiblePersonList
