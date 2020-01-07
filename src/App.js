@@ -1,11 +1,11 @@
 import React from 'react'
 import './App.css'
-import VisiblePersonList from './components/VisiblePersonList'
+import PersonList from './components/PersonList'
 
 function App() {
   return (
     <div>
-      <VisiblePersonList/>
+      <PersonList/>
     </div>
   );
 }

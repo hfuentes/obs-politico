@@ -14,11 +14,14 @@ class PersonList extends Component {
 
 	componentDidMount() {
 		if (!this.props.persons.length) {
-			console.log('loading true ...')
 			this.setState({ loading: true })
 		}
 
-		this.props.firebase.persons().get().then(snapshot => {
+		this.props.firebase
+			.persons()
+			.where('active', '==', true)
+			.get()
+			.then(snapshot => {
 			this.props.onLoadPersons(personsBuilder(snapshot))
 		}).catch(err => {
 			console.error('Error getting <persons> documents', err)
@@ -35,11 +38,18 @@ class PersonList extends Component {
 
 		return (
 			<div>
+				<h3>Promesas de campaña</h3>
 				{loading && <div>Loading ...</div>}
 				{persons.map(person => (
 					<div key={person.uid}>
 						<span><strong>Id: </strong> {person.id}</span><br />
-						<span><strong>Name: </strong> {person.name}</span>
+						<span><strong>Name: </strong> {person.name}</span><br />
+						<span><strong>Promesas:</strong></span>
+						{person.promises.map((promise, promiseKey) => (
+							<div key={promiseKey}>
+								<span>{promise.title}</span>
+							</div>
+						))}	
 					</div>
 				))}
 			</div>
