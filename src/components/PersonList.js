@@ -42,14 +42,15 @@ class PersonList extends Component {
 				{loading && <div>Loading ...</div>}
 				{persons.map(person => (
 					<div key={person.uid}>
-						<span><strong>Id: </strong> {person.id}</span><br />
 						<span><strong>Name: </strong> {person.name}</span><br />
-						<span><strong>Promesas:</strong></span>
-						{person.promises.map((promise, promiseKey) => (
-							<div key={promiseKey}>
-								<span>{promise.title}</span>
-							</div>
-						))}	
+						{person.promises && person.promises.length ? <div>
+							<span><strong>Promesas:</strong></span>
+							<ul>
+								{(person.promises || []).map((promise, promiseKey) => (
+									<li key={promiseKey}>{promise.title}</li>
+								))}
+							</ul>
+						</div> : <div></div>}
 					</div>
 				))}
 			</div>
